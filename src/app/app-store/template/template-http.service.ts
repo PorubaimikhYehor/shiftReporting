@@ -30,8 +30,9 @@ export class TemplateHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addTemplate',
       payload: { departmentId, template },
-      loadingMsg: 'Adding the template ...',
-      successMsg: `Template has been added`
+      loadingMsg: 'Adding the template...',
+      successMsg: `Template has been added`,
+      errorMsg: 'Failed to add the template',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -40,8 +41,9 @@ export class TemplateHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateTemplate',
       payload: { template },
-      loadingMsg: 'Updating the template ...',
-      successMsg: `Template has been updated`
+      loadingMsg: 'Updating the template...',
+      successMsg: `Template has been updated`,
+      errorMsg : 'Failed to update the template',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -49,8 +51,9 @@ export class TemplateHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deleteTemplate',
       payload: { templateId },
-      loadingMsg: 'Deleting the template ...',
-      successMsg: `Template has been deleted`
+      loadingMsg: 'Deleting the template...',
+      successMsg: `Template has been deleted`,
+      errorMsg: 'Failed to delete the template',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -59,6 +62,7 @@ export class TemplateHttpService {
       url: this.baseUrl + 'getTemplates',
       payload: { departmentID },
       loadingMsg: 'Loading the templates...',
+      errorMsg: 'Failed to load the templates',
     }
     // const resp: AppHttpResponse = {
     //   status: 200,
@@ -93,6 +97,7 @@ export class TemplateHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getTemplateTypes',
       loadingMsg: 'Loading the template types...',
+      errorMsg: 'Failed to load the template types',
     }
     // const resp: AppHttpResponse = {
     //   status: 200,

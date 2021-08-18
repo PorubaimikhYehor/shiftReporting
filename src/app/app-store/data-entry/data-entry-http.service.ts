@@ -11,12 +11,16 @@ export class DataEntryHttpService {
 
   constructor(private httpService: HttpService) { }
 
-  addDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
+  addDataEntry(dataEntry: DataEntry, inBackground?: boolean): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addDataEntry',
       payload: { dataEntry },
-      loadingMsg: 'Adding the dataEntry ...',
-      successMsg: `DataEntry has been added`
+      loadingMsg: 'Adding the data entry...',
+      successMsg: `DataEntry has been added`,
+      errorMsg: 'Failed to add the data entry',
+
+      disableLoadingMsg: inBackground,
+      disableErrorMsg: inBackground,
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -29,27 +33,38 @@ export class DataEntryHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDataEntriesOnDate',
       payload: { departmentId, fromDate, toDate },
-      loadingMsg: 'Loading data entries ...',
+      loadingMsg: 'Loading data entries...',
+      errorMsg: 'Failed to load data entries'
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  updateDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
+  updateDataEntry(dataEntry: DataEntry, inBackground?: boolean): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateDataEntry',
       payload: { dataEntry },
-      loadingMsg: 'Updating the dataEntry ...',
-      successMsg: `DataEntry has been updated`
+
+      loadingMsg: 'Updating the data entry...',
+      successMsg: `Data entry has been updated`,
+      errorMsg: 'Failed to update the data entry',
+
+      disableLoadingMsg: inBackground,
+      disableErrorMsg: inBackground,
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  submitDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
+  submitDataEntry(dataEntry: DataEntry, inBackground?: boolean): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'submitDataEntry',
       payload: { dataEntry },
-      loadingMsg: 'Submitting the dataEntry ...',
-      successMsg: `DataEntry has been submitted`
+
+      loadingMsg: 'Submitting the dataEntry...',
+      successMsg: `Data entry has been submitted`,
+      errorMsg: 'Failed to submit the data entry',
+
+      disableLoadingMsg: inBackground,
+      disableErrorMsg: inBackground,
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -57,7 +72,8 @@ export class DataEntryHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDataEntryLogs',
       payload: { dataEntryId },
-      loadingMsg: 'Loading the dataEntry log ...',
+      loadingMsg: 'Loading the data entry log...',
+      errorMsg: 'Failed to load the data entry log',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

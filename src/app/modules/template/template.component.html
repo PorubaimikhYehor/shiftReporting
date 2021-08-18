@@ -47,6 +47,22 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              Notifications
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-notifications-users-list 
+              [users]="departmentUsers" 
+              [checkedUsers]="template.body.toNotifyUserIdList"
+              (checkedUser)="addUserToNotifyList($event)"
+              (uncheckedUser)="removeUserFromToNotifyList($event)"
+            ></app-notifications-users-list>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
               New controls
             </mat-panel-title>
           </mat-expansion-panel-header>

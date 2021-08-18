@@ -9,6 +9,7 @@ import { DateService } from 'src/app/services/date/date.service';
 export class YearWeekSelectorComponent implements OnChanges {
   @Input() week: number;
   @Input() year: number;
+  @Input() disabled?: boolean;
   @Output() changeWeek = new EventEmitter<{}>()
 
   weekStr: string;

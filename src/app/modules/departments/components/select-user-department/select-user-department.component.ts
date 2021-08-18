@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 import { User, State, Department } from '@models/*';
-import { tap, filter } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+import { tap, filter, mergeMap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 import { DepartmentActions } from '@actions/*';
-import { userDepartments } from 'src/app/app-store';
+import { currentDepartment, userDepartments } from 'src/app/app-store';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,10 @@ import { FormControl } from '@angular/forms';
 })
 export class SelectUserDepartmentComponent implements OnInit {
   @Output() changeDepartment = new EventEmitter<Department>()
+  @Input() set disabled(is: boolean) {
+    if (is) this.department.disable();
+    else this.department.enable();
+  }
   department = new FormControl(null);
   departments: Department[]
   constructor(
@@ -22,10 +26,24 @@ export class SelectUserDepartmentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.select(userDepartments).subscribe(dep => {
-      this.departments = dep;
-      dep.length && this.department.setValue(dep[0].departmentId);
-    });
+    this.store.select(userDepartments).pipe(
+      tap(departments => {
+        this.departments = departments;
+      }),
+      mergeMap(_ => this.store.select(currentDepartment)),
+      tap(cd => {
+        if (!cd) {
+          this.departments.length && this.department.setValue(this.departments[0].departmentId);
+          return;
+        }
+
+        if (cd.departmentId == this.department.value)
+          return ;
+
+        this.department.setValue(cd.departmentId);
+        this.changeDepartment.emit(this.departments.find(d => d.departmentId == this.department.value));
+      })
+    ).subscribe();
 
     this.authService.getCurrentUser()
       .pipe(
@@ -33,8 +51,9 @@ export class SelectUserDepartmentComponent implements OnInit {
         tap(({ userId }) => this.store.dispatch(DepartmentActions.getUserDepartments({ userId })))
       ).subscribe()
     this.department.valueChanges.subscribe(val => {
-      const dep = this.departments.find(d => d.departmentId == val);
-      this.changeDepartment.emit(dep);
+      const department = this.departments.find(d => d.departmentId == val);
+      this.changeDepartment.emit(department);
+      this.store.dispatch(DepartmentActions.setCurrentDepartment({ department }));
     })
   }
 }

@@ -1,6 +1,6 @@
 <div class="h-full w-full overflow-auto ">
   <div [ngStyle]="gridSize" class="mx-auto">
-    <gridster [options]="optionsResult" [style.background-color]="optionsResult.bgColor">
+    <gridster [options]="optionsResult" [style.background-color]="optionsResult.bgColor" class="rounded-lg">
       <gridster-item *ngFor="let item of dashboard" [class.isCurrent]='item.controlId === selectedControlId'
         [item]="item.gridItem" [style.background-color]="getBackground(item)"
         (click)="itemClick($event, item.controlId)">

@@ -9,6 +9,7 @@ import { DateService } from 'src/app/services/date/date.service';
 })
 export class DaySelectorComponent implements OnInit {
   @Input() day: Date;
+  @Input() disabled?: boolean;
   @Output() changeDay = new EventEmitter<Date>()
   // controlDay = new FormControl('')
   // weekStr: string;

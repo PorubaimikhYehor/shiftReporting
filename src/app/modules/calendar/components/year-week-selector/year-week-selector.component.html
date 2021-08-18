@@ -1,22 +1,22 @@
 <div class="flex h-full items-center">
-  <button mat-icon-button (click)="prevWeek()" class="text-gray-600" matTooltip="Previos week">
+  <button mat-icon-button (click)="prevWeek()" class="text-gray-600" matTooltip="Previos week" [disabled]="disabled">
     <mat-icon svgIcon="chevron-left"></mat-icon>
   </button>
   <label class="mr-1" (click)="weekSelect.open()">Week: </label>
   <div class="w-10 mr-2">
-    <mat-select [value]="week" #weekSelect (selectionChange)="change($event, 'week')">
+    <mat-select [value]="week" #weekSelect (selectionChange)="change($event, 'week')" [disabled]="disabled">
       <mat-option *ngFor="let item of weeks" [value]='item' [matTooltip]="getWeekStr(item)">{{item}}</mat-option>
     </mat-select>
   </div>
 
   <label class="mr-1" for='year' (click)="yearSelect.open()">Year:</label>
   <div class="w-16">
-    <mat-select [value]="year" #yearSelect (selectionChange)="change($event, 'year')">
+    <mat-select [value]="year" #yearSelect (selectionChange)="change($event, 'year')" [disabled]="disabled">
       <mat-option *ngFor="let item of years" [value]='item'>{{item}}</mat-option>
     </mat-select>
   </div>
 
-  <button mat-icon-button (click)="nextWeek()" class="text-gray-600" matTooltip="Next week">
+  <button mat-icon-button (click)="nextWeek()" class="text-gray-600" matTooltip="Next week" [disabled]="disabled">
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>
 </div>

@@ -6,6 +6,8 @@ import { EMPTY } from 'rxjs';
 import * as DataEntryActions from './data-entry.actions';
 import { DataEntryHttpService } from './data-entry-http.service';
 import { mergeMap, filter, map, tap } from 'rxjs/operators';
+import { DataEntryCookieSenderService } from './data-entry-cookie-sender.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Injectable()
@@ -14,8 +16,18 @@ export class DataEntryEffects {
   addDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.addDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.addDataEntry(dataEntry).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
+      map(resp => {
+        if (resp && resp.status === 200)
+          return DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body });
+
+        this.cookieService.set('data-entry-backup', JSON.stringify({
+          action: 'add',
+          dataEntry
+        }));
+        this.dataEntryCookieSenderService.send('data-entry-backup');
+
+        return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null });
+      })
     )),
   ));
 
@@ -38,16 +50,36 @@ export class DataEntryEffects {
   updateDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.updateDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.updateDataEntry(dataEntry).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
+      map(resp => {
+        if (resp && resp.status === 200)
+          return DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body });
+
+        this.cookieService.set('data-entry-backup', JSON.stringify({
+          action: 'update',
+          dataEntry
+        }));
+        this.dataEntryCookieSenderService.send('data-entry-backup');
+
+        return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null });
+      })
     )),
   ));
 
   submitDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.submitDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.submitDataEntry(dataEntry).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
+      map(resp => {
+        if (resp && resp.status === 200)
+          return DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body });
+
+        this.cookieService.set('data-entry-backup', JSON.stringify({
+          action: 'submit',
+          dataEntry
+        }));
+        this.dataEntryCookieSenderService.send('data-entry-backup');
+
+        return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null });
+      })
     )),
   ));
 
@@ -63,7 +95,9 @@ export class DataEntryEffects {
 
   constructor(
     private actions$: Actions,
-    private dataEntryHttpService: DataEntryHttpService
+    private dataEntryHttpService: DataEntryHttpService,
+    private dataEntryCookieSenderService: DataEntryCookieSenderService,
+    private cookieService: CookieService,
   ) { }
 
 }

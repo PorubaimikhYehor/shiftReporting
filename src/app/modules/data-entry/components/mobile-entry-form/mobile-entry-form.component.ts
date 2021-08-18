@@ -15,6 +15,6 @@ export class MobileEntryFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboard = this.dashboard.filter(d=> d.type != "label");
-    console.log(this.dashboard);    
+    // console.log(this.dashboard);    
   }
 }

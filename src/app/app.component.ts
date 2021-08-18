@@ -8,10 +8,13 @@ import { routerLinks } from './modules/authorization/guards/role.guard';
 import { Store, select } from '@ngrx/store';
 import { ConfigurationsActions, UserActions } from './app-store/actions'
 import { getRoles } from './app-store/user/user.actions';
-import { userRoles, roles, userDepartments } from './app-store';
+import { userRoles, roles, userDepartments, connectionStatus } from './app-store';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { CurrentUserFormComponent } from './modules/users/components/current-user-form/current-user-form.component';
+import { DataEntryCookieSenderService } from './app-store/data-entry/data-entry-cookie-sender.service';
+import { ConnectionCheckerService } from './app-store/connection/connection-checker.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +31,7 @@ export class AppComponent implements OnInit {
   roles: Role[];
   userRole: string = ""
   smallScreen = true;
+  isConnected: boolean;
 
   constructor(
     private bpObserver: BreakpointObserver,
@@ -35,6 +39,9 @@ export class AppComponent implements OnInit {
     private oidcCLientService: OidcClientService,
     private store: Store<State>,
     private dialog: MatDialog,
+    private dataEntryCookieSender: DataEntryCookieSenderService,
+    private connectionCheckerService: ConnectionCheckerService,
+    private router: Router,
   ) { }
 
 
@@ -59,8 +66,15 @@ export class AppComponent implements OnInit {
         this.abbreviation = currentUser?.firstName.slice(0, 1).toUpperCase() + currentUser?.secondName.slice(0, 1).toUpperCase();
         this.config.map(item => item['isShow'] = item.allowedRoles.includes(currentUser.roleId))
       }),
-    ).subscribe()
+    ).subscribe();
+
+    this.dataEntryCookieSender.send('data-entry-backup');
+    this.connectionCheckerService.start(5000);
+
+    this.store.select(connectionStatus)
+      .subscribe(status => this.isConnected = status);
   }
+
   editUserInfo() {
     const dialogRef = this.dialog.open(CurrentUserFormComponent, { data: { user: this.currentUser } });
     dialogRef.afterClosed().subscribe(user => {
@@ -71,5 +85,9 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.oidcCLientService.logout()
+  }
+
+  redirect(url) {
+    this.router.navigate([url]);
   }
 }

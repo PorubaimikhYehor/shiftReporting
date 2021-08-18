@@ -1,7 +1,7 @@
 <div class="p-4 flex items-start max-w-6xl">  
   <div class="menu-button-place"></div>
   <div class="flex-1 flex flex-wrap">
-    <app-select-user-department class="flex-1 mr-4" (changeDepartment)="selectDepartment($event)"></app-select-user-department>
+    <app-select-user-department class="flex-1 mr-4" (changeDepartment)="selectDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
     <app-select-shift class="flex-1 mr-4" (changeShift)="selectShift($event)"></app-select-shift>
 
   </div>

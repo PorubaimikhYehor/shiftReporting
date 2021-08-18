@@ -19,7 +19,8 @@ export class ConfigurationHttpService {
   getConfigurations(): Observable<Configuration[]> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getConfigurations',
-      loadingMsg: 'loading configurations ...',
+      loadingMsg: 'loading configurations...',
+      errorMsg: 'Failed to load configurations'
     }
     return this.httpService.post<AppHttpResponse>(options).pipe(
       filter(resp => resp && resp.status === 200),
@@ -31,8 +32,9 @@ export class ConfigurationHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateConfigurations',
       payload: { configurations },
-      loadingMsg: 'Updating the configurations ...',
-      successMsg: `Configurations has been updated`
+      loadingMsg: 'Updating the configurations...',
+      successMsg: `Configurations has been updated`,
+      errorMsg: 'Failed to update the configurations',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

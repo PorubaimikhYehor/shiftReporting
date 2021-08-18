@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "winbuild": "set NODE_ENV=prod && ng build --configuration production && set NODE_ENV=dev",
     "dev": "ng serve --host 10.91.234.16 --ssl=true"
   },
   "private": true,
@@ -28,6 +29,7 @@
     "@ngrx/store": "^12.3.0",
     "@ngrx/store-devtools": "^12.3.0",
     "angular-gridster2": "^9.1.0",
+    "ngx-cookie-service": "^12.0.3",
     "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",

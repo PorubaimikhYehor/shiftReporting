@@ -8,6 +8,7 @@ export const departmentsFeatureKey = 'departments';
 export interface State extends EntityState<Department> {
   // additional entities state properties
   userDepartments: Department[];
+  currentDepartment: Department;
 }
 
 export const adapter: EntityAdapter<Department> = createEntityAdapter<Department>({
@@ -17,6 +18,7 @@ export const adapter: EntityAdapter<Department> = createEntityAdapter<Department
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   userDepartments: [],
+  currentDepartment: null
 });
 
 const departmentReducer = createReducer(
@@ -39,6 +41,10 @@ const departmentReducer = createReducer(
   on(DepartmentActions.getUserDepartmentsSucces,
     (state, { departments }) => ({ ...state, userDepartments: departments })
   ),
+  on(DepartmentActions.setCurrentDepartment,
+    (state, { department }) => ({ ...state, currentDepartment: department })
+  ),
+  
 
 );
 

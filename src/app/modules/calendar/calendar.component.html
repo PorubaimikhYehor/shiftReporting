@@ -2,22 +2,24 @@
   <div class="m-4 mb-0 flex justify-between items-center max-w-6xl">
     <div class="menu-button-place"></div>
     <div class="flex-1 ">
-      <app-select-user-department (changeDepartment)="changeDepartment($event)"></app-select-user-department>
+      <app-select-user-department (changeDepartment)="changeDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
     </div>
-    <mat-button-toggle-group class="ml-4 mb-6" #group="matButtonToggleGroup">
-      <mat-button-toggle value="day" [checked]="day" (click)="dayView()" matTooltip="Day view">D
-      </mat-button-toggle>
-      <mat-button-toggle value="week" [checked]="!day" (click)="weekView()" matTooltip="Week view">W
-      </mat-button-toggle>
-    </mat-button-toggle-group>
 
+    <div class="flex justify-between">
+      <div *ngIf="!day" class="ml-4 mb-6">
+        <app-year-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)" [disabled]="!isConnected"></app-year-week-selector>
+      </div>
+      <div *ngIf="day" class="ml-4 mb-6">
+        <app-day-selector [day]='day' (changeDay)="setDay($event)" [disabled]="!isConnected"></app-day-selector>
+      </div>
+    </div>
 
-    <div *ngIf="!day" class="ml-4 mb-6">
-      <app-year-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)"></app-year-week-selector>
-    </div>
-    <div *ngIf="day" class="ml-4 mb-6">
-      <app-day-selector [day]='day' (changeDay)="setDay($event)"></app-day-selector>
-    </div>
+      <mat-button-toggle-group class="ml-4 mb-6" #group="matButtonToggleGroup" [disabled]="!isConnected">
+        <mat-button-toggle value="day" [checked]="day" (click)="dayView()" matTooltip="Day view">D
+        </mat-button-toggle>
+        <mat-button-toggle value="week" [checked]="!day" (click)="weekView()" matTooltip="Week view">W
+        </mat-button-toggle>
+      </mat-button-toggle-group>
   </div>
   <div class="flex-1 m-4 mt-0 ">
     <app-week-grid [day]="day" [schedules]="schedules" [week]='week' [year]='year'></app-week-grid>

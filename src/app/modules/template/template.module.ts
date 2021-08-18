@@ -15,11 +15,12 @@ import { SettingsPiafComponent } from './components/settings-piaf/settings-piaf.
 import { SettingsDBComponent } from './components/settings-db/settings-db.component';
 import { PiafModule } from '../piaf/piaf.module';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
+import { NotificationsUsersListComponent } from './components/notifications-users-list/notifications-users-list.component';
 
 
 
 @NgModule({
-  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent, SettingsControlComponent],
+  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent, SettingsControlComponent, NotificationsUsersListComponent],
   imports: [
     CommonModule,
     FormModule,

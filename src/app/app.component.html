@@ -1,6 +1,11 @@
 <mat-sidenav-container class="h-full" autosize>
   <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
     class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
+    <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
+      <button mat-icon-button color="primary">
+        <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
+      </button>
+    </div>   
     <div *ngIf="!isSmall && abbreviation" class="flex flex-col items-center my-4">
       <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
         <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
@@ -10,14 +15,14 @@
           <p class="text-gray-800 font-bold mb-1">{{userName}}</p>
           <p class="text-gray-600 text-xs uppercase">{{userRole}}</p>
         </div>
-        <button mat-icon-button (click)="editUserInfo()">
+        <button mat-icon-button (click)="editUserInfo()" [disabled]="!isConnected">
           <mat-icon svgIcon="pencil" class="text-gray-600"></mat-icon>
         </button>
       </div>
     </div>
     <mat-nav-list>
       <div *ngFor="let item of config">
-        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key" (click)="smallScreen && snav.toggle()">
+        <mat-list-item *ngIf="item.isShow" (click)="smallScreen && snav.toggle() || (isConnected && redirect('./' + item.key))">
           <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
           <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
         </mat-list-item>
@@ -32,7 +37,7 @@
   <mat-sidenav-content>
     <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
       <button mat-icon-button color="primary">
-        <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
+        <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
       </button>
     </div>
     <router-outlet></router-outlet>

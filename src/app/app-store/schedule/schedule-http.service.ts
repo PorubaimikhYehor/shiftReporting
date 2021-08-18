@@ -15,8 +15,9 @@ export class ScheduleHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addSchedule',
       payload: { schedule },
-      loadingMsg: 'Adding the schedule ...',
-      successMsg: `Schedule has been added`
+      loadingMsg: 'Adding the schedule...',
+      successMsg: `Schedule has been added`,
+      errorMsg: 'Failed to load schedules',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -25,8 +26,9 @@ export class ScheduleHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateSchedule',
       payload: { schedule },
-      loadingMsg: 'Updating the schedule ...',
-      successMsg: `Schedule has been updated`
+      loadingMsg: 'Updating the schedule...',
+      successMsg: `Schedule has been updated`,
+      errorMsg: 'Failed to update the schedule',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -34,8 +36,9 @@ export class ScheduleHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deleteSchedule',
       payload: { scheduleId },
-      loadingMsg: 'Deleteing the schedule ...',
-      successMsg: `Schedule has been delited`
+      loadingMsg: 'Deleteing the schedule...',
+      successMsg: `Schedule has been deleted`,
+      errorMsg: 'Failed to delete the schedule',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -45,7 +48,8 @@ export class ScheduleHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getSchedules',
       payload: { departmentId },
-      loadingMsg: 'Loading the schedule ...',
+      loadingMsg: 'Loading the schedule...',
+      errorMsg: 'Failed to load the schedule'
     }
     return this.httpService.post<AppHttpResponse>(options);
     return of(null)

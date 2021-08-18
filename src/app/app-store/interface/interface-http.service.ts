@@ -14,8 +14,9 @@ export class InterfaceHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addInterface',
       payload: { interface: intface, templateId },
-      loadingMsg: 'Adding the interface ...',
-      successMsg: `Interface has been added`
+      loadingMsg: 'Adding the interface...',
+      successMsg: `Interface has been added`,
+      errorMsg: 'Failed to add the interface',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -24,8 +25,9 @@ export class InterfaceHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateInterface',
       payload: { interface: intface },
-      loadingMsg: 'Updating the interface ...',
-      successMsg: `Interface has been updated`
+      loadingMsg: 'Updating the interface...',
+      successMsg: `Interface has been updated`,
+      errorMsg: 'Failed to update the interface',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -33,7 +35,8 @@ export class InterfaceHttpService {
     const options: AppHttpRequest = {
       payload: { templateId },
       url: this.baseUrl + 'getInterfaces',
-      loadingMsg: 'Loading interfaces ...',
+      loadingMsg: 'Loading interfaces...',
+      errorMsg: 'Failed to load interfaces',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

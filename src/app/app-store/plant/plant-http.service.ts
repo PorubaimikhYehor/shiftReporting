@@ -17,7 +17,8 @@ export class PlantHttpService {
   getPlants(): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getPlants',
-      loadingMsg: 'Loading plants ...',
+      loadingMsg: 'Loading plants...',
+      errorMsg: 'Failed to load plants',
     }
     return this.httpService.post<AppHttpResponse>(options)
   }
@@ -28,8 +29,9 @@ export class PlantHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addPlant',
       payload: { plant },
-      loadingMsg: 'Adding new plant ...',
-      successMsg: `New plant '${plant.name}' has been created`
+      loadingMsg: 'Adding a new plant...',
+      successMsg: `New plant '${plant.name}' has been created`,
+      errorMsg: 'Failed to add a plant'
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -38,8 +40,9 @@ export class PlantHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updatePlant',
       payload: { plant },
-      loadingMsg: 'Updating the plant ...',
-      successMsg: `Plant has been updated`
+      loadingMsg: 'Updating the plant...',
+      successMsg: `Plant has been updated`,
+      errorMsg: 'Failed to update the plant'
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -48,8 +51,9 @@ export class PlantHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deletePlant',
       payload: { plantId },
-      loadingMsg: 'Deleting the plant ...',
-      successMsg: `Plant has been deleted`
+      loadingMsg: 'Deleting the plant...',
+      successMsg: `Plant has been deleted`,
+      errorMsg: 'Failed to delete the plant',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

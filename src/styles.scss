@@ -1,7 +1,26 @@
-@import "./tailwindcss/normalize.css";
+// @import "./assets/normalize.css";
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// @import "./assets/global.scss";
+// @import "./assets/tailwind.scss";
+
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import './tailwindcss/custom-components/index.scss';
+
+// @import 'tailwindcss/utilities';
+// html, body { height: 100%; }
+// body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 html,
 body {
-    height: 100%;
+  height: 100%;
+
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
 }
 
 body {
@@ -9,7 +28,6 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-@import "./tailwindcss/useTailwind.css";
 p {
     margin: 0;
 }
@@ -66,20 +84,18 @@ input:focus {
     color: #3f51b5;
 }
 
-.bg-disabled {
-    background-color: rgba($color: #000000, $alpha: 0.12);
+.bg-disabled{
+  background-color: rgba($color: #000000, $alpha: 0.12);
+}
+.text-disabled{
+  color: rgba($color: #000000, $alpha: 0.26);
 }
 
-.text-disabled {
-    color: rgba($color: #000000, $alpha: 0.26);
-}
-
-.menu-button-place {
-    min-width: 56px;
-    min-height: 56px;
-    @media (min-width: 960px) {
-        min-width: 0;
-        min-height: 0;
-        ;
-    }
+.menu-button-place{
+  min-width: 56px;
+  min-height: 56px;
+  @media (min-width: 960px) {
+    min-width: 0;
+    min-height: 0;
+  }
 }

@@ -3,7 +3,7 @@ import { ScheduleActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { State, Schedule, Shift } from '@models/*';
 import { Subscription } from 'rxjs';
-import { allSchedules } from 'src/app/app-store';
+import { allSchedules, connectionStatus } from 'src/app/app-store';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
@@ -22,6 +22,7 @@ export class SchedulesComponent implements OnInit {
   list: Schedule[] = [];
   schedules$: Subscription;
   isAddDisabled = true;
+  isConnected: boolean;
   constructor(
     private store: Store<State>,
     private dialog: MatDialog,
@@ -33,7 +34,10 @@ export class SchedulesComponent implements OnInit {
       select(allSchedules),
       tap(val => this.schedules = val),
       tap(_ => this.createLIst())
-    ).subscribe()
+    ).subscribe();
+
+    this.store.select(connectionStatus)
+      .subscribe(status => this.isConnected = status)
   }
   ngOnDestroy(): void {
     this.schedules$.unsubscribe();

@@ -48,3 +48,7 @@ export const getUserDepartmentsSucces = createAction(
   props<{ departments: Department[] }>()
 )
 
+export const setCurrentDepartment = createAction(
+  '[Department/API] Set Current Department',
+  props<{ department: Department }>()
+);

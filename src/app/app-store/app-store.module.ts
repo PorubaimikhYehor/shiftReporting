@@ -16,6 +16,8 @@ import * as fromUser from './user/user.reducer';
 import { UserEffects } from './user/user.effects';
 import * as fromConfiguration from './configuration/configuration.reducer';
 import { ConfigurationEffects } from './configuration/configuration.effects';
+import * as fromConnection from './connection/connection.reducer';
+import { ConnectionEffects } from './connection/connection.effects';
 
 
 
@@ -40,8 +42,10 @@ import { ConfigurationEffects } from './configuration/configuration.effects';
       InterfaceEffects,
       DataEntryEffects,
       UserEffects,
-      ConfigurationEffects
+      ConfigurationEffects,
+      ConnectionEffects
     ]),
+    // StoreModule.forFeature(fromConnection.connectionFeatureKey, fromConnection.reducer),
   ]
 })
 export class AppStoreModule { }

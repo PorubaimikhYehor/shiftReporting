@@ -1,9 +1,9 @@
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 
 export interface TemplateData {
-  key: string,
-  name: string,
-  value: ValueType
+  key: string;
+  name: string;
+  value: ValueType;
 }
 
 export class Template {
@@ -19,7 +19,6 @@ export class Template {
   validToDate: string;
   constructor(opt: { [key: string]: any } = {}) {
     if (opt['templateId']) { this.templateId = opt['templateId'] }
-    // this.templateId = opt['templateId'] || null;
     this.name = opt['name'] || '';
     this.templateTypeId = opt['templateTypeId'] || null;
     this.templateTypeName = opt['templateTypeName'] || '';
@@ -41,11 +40,14 @@ export class TemplateBody {
   Datasource: Attribute[];
   dashboard: Array<DynControl>;
   gridsterOptions: {};
+  toNotifyUserIdList: string[];
+
   constructor(opt: { [key: string]: any } = {}) {
     this.TemplateData = opt['TemplateData'] || [];
     this.PIAFTemplate = opt['PIAFTemplate'] || {};
     this.PIAFAttributes = opt['PIAFAttributes'] || {};
     this.XML = opt['XML'] || [];
+    this. toNotifyUserIdList = opt['toNotifyUserIdList'] || [];
     this.Excel = opt['Excel'] || [];
     this.DatabaseTable = opt['DatabaseTable'] || [];
     this.Datasource = opt['Datasource'] || [];
@@ -61,14 +63,18 @@ export class TemplateBody {
     return result;
   }
   set templateDataKV(data: {}) {
+    const TemplateData = JSON.parse(JSON.stringify(this.TemplateData))
     Object.keys(data).map(key => {
-      const tempData = this.TemplateData.find(i => i.key === key);
-      if (tempData) { tempData.value = data[key]; return; };
-      this.TemplateData.push({
-        key,
-        name: this.dashboard.find(control => control.controlId === key).name,
-        value: data[key],
-      })
+      const tempData = TemplateData.find(i => i.key === key);
+      if (tempData)
+        tempData.value = data[key];
+      else
+        TemplateData.push({
+          key,
+          name: this.dashboard.find(control => control.controlId === key).name,
+          value: data[key],
+        })
+      this.TemplateData = TemplateData;
     })
   }
 };

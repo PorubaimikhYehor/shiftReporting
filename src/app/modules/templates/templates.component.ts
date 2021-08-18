@@ -3,7 +3,7 @@ import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { State, Template, User } from '@models/*';
 import { TemplateActions } from '@actions/*';
-import { allTemplates } from 'src/app/app-store';
+import { allTemplates, connectionStatus } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class TemplatesComponent implements OnInit {
   departmentId: number;
   templates: Template[] = [];
   templates$: Subscription;
+  isConnected: boolean;
 
   constructor(
     private authSevice: AuthorizationService,
@@ -25,6 +26,9 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.select(connectionStatus)
+      .subscribe(status => this.isConnected = status)
+
     this.templates$ = this.store.pipe(
       select(allTemplates)
     ).subscribe(templates => {

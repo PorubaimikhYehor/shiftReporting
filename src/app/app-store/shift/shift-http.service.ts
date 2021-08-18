@@ -16,8 +16,9 @@ export class ShiftHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addShift',
       payload: { shift },
-      loadingMsg: 'Adding the shift ...',
-      successMsg: `Shift has been added`
+      loadingMsg: 'Adding the shift...',
+      successMsg: `Shift has been added`,
+      errorMsg: 'Failed to add the shift',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -26,8 +27,9 @@ export class ShiftHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateShift',
       payload: { shift },
-      loadingMsg: 'Updating the shift ...',
-      successMsg: `Shift has been updated`
+      loadingMsg: 'Updating the shift...',
+      successMsg: `Shift has been updated`,
+      errorMsg: 'Failed to update the shift',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -36,8 +38,9 @@ export class ShiftHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deleteShift',
       payload: { shiftId },
-      loadingMsg: 'Deleteing the shift ...',
-      successMsg: `Shift has been delited`
+      loadingMsg: 'Deleteing the shift...',
+      successMsg: `Shift has been delited`,
+      errorMsg: 'Failed to delete the shift',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -46,7 +49,8 @@ export class ShiftHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getShifts',
       // payload: { departmentId },
-      loadingMsg: 'Loading the shifts ...',
+      loadingMsg: 'Loading the shifts...',
+      errorMsg: 'Failed to load the shifts',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

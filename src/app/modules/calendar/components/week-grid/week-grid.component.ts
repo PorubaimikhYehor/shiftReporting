@@ -211,6 +211,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   }
   shiftInfo = null;
   clickShowMore(e, shift) {
+    shift.expanded = true;
     this.shiftInfo = {};
     this.shiftInfo.position = { ...shift.position };
     this.shiftInfo.templNum = shift.templNum;
@@ -224,6 +225,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   }
   mouseOut(e: MouseEvent, shift) {
     if (e.target['id'] !== 'shift' || !this.shiftInfo) return;
+    shift.expanded = false;
     shift.position.top = this.shiftInfo.position.top;
     shift.position.height = this.shiftInfo.position.height;
     shift.templNum = this.shiftInfo.templNum;

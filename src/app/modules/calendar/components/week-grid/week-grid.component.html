@@ -29,7 +29,9 @@
         <div *ngFor="let item of hours; let i=index"
           class="flex justify-center border-b border-r border-gray-300 flex-1"> </div>
         <!-- shifts -->
-        <div (mouseleave)="mouseOut($event, shift)" id='shift' *ngFor="let shift of day.value.shifts" [ngStyle]="shift.position" [ngClass]="{'shadow-outline z-10': shift.isActive}" class="absolute w-full  pb-1 pr-1">
+        <div (mouseleave)="mouseOut($event, shift)" id='shift' *ngFor="let shift of day.value.shifts" [ngStyle]="shift.position" 
+          [class.z-30]="shift.expanded" [class.shadow-2xl]="shift.expanded" class="absolute w-full  pb-1 pr-1"
+        >
           <app-templates-list [calendarHight]="calendarContentHeight" [day]="day" [shift]="shift" (clickShowMore)="clickShowMore($event, shift)">
           </app-templates-list>
         </div>

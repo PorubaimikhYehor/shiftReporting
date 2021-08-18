@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Schedule, State, DataEntry } from '@models/*';
 import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
-import { allSchedules } from 'src/app/app-store';
+import { allSchedules, connectionStatus } from 'src/app/app-store';
 import { DateService } from 'src/app/services/date/date.service';
 import { CalendarService } from './calendar.service';
 
@@ -20,6 +20,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   weekYear: { year: number, week: number };
   weekDataEntries: DataEntry[];
   day: Date;
+  isConnected: boolean;
 
   constructor(
     private store: Store<State>,
@@ -37,10 +38,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.getDataEntry(this.day);
       })
     this.getSchedules();
+
+    this.store.select(connectionStatus)
+        .subscribe(status => this.isConnected = status);
   }
 
   ngOnDestroy() {
-    this.store.dispatch(ScheduleActions.clearSchedules());
+    // this.store.dispatch(ScheduleActions.clearSchedules());
   }
 
   setState(state: { week: number, year: number, day: Date }) {
@@ -91,7 +95,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.setState({ day, week: 1, year: 1 })
   }
   dayView() {
-    if (this.day) return;
+    if (this.day || !this.isConnected) return;
     const day = this.dateService.getMonday(this.year, this.week)
     this.setState({ day, week: 1, year: 1 })
   }
@@ -103,6 +107,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
   
   weekView() {
+    if (!this.isConnected) return;
     const weekYear = this.dateService.getWeek(this.day);
     const week = weekYear.week;
     const year = weekYear.year;

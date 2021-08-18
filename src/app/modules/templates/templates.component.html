@@ -1,7 +1,7 @@
 <div *ngIf="currentUser" class="p-4 flex items-center max-w-6xl">
   <div class="menu-button-place"></div>
 
-  <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)"></app-select-user-department>
+  <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
   <mat-form-field appearance="outline" class="flex-1 mx-4">
     <mat-label>Search</mat-label>
     <input matInput placeholder="Search" formControlName="search">

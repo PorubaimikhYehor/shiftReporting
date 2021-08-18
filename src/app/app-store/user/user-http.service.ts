@@ -16,7 +16,8 @@ export class UserHttpService {
   getAllUsers(): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getAllUsers',
-      loadingMsg: 'Loading users ...',
+      loadingMsg: 'Loading users...',
+      errorMsg: 'Failed to load users',
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
@@ -24,8 +25,9 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addUser',
       payload: { user },
-      loadingMsg: 'Adding the user ...',
-      successMsg: `User has been added`
+      loadingMsg: 'Adding the user...',
+      successMsg: `User has been added`,
+      errorMsg: 'Failed to add the user',
     }
     return this.httpService.post<AppHttpResponse>(options);
   };
@@ -33,8 +35,9 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateUser',
       payload: { user },
-      loadingMsg: 'Updating the user ...',
-      successMsg: `User has been updated`
+      loadingMsg: 'Updating the user...',
+      successMsg: `User has been updated`,
+      errorMsg: 'Failed to update the user',
     }
     return this.httpService.post<AppHttpResponse>(options);
   };
@@ -42,7 +45,8 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       payload: { userId, roleId },
       url: this.baseUrl + 'addUserRole',
-      loadingMsg: "Adding user's roles ...",
+      loadingMsg: "Adding user's roles...",
+      errorMsg: 'Failed to add user\'s roles',
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
@@ -50,7 +54,8 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       payload: { userId, roleId },
       url: this.baseUrl + 'deleteUserRole',
-      loadingMsg: "Deleting user's roles ...",
+      loadingMsg: "Deleting user's roles...",
+      errorMsg: 'Failed to delete user\'s roles',
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
@@ -58,14 +63,16 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       payload: { userId },
       url: this.baseUrl + 'getUserRoles',
-      loadingMsg: "Loading user's roles ...",
+      loadingMsg: "Loading user's roles...",
+      errorMsg: "Failed to load user's roles"
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
   getRoles(): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getRoles',
-      loadingMsg: 'Loading roles ...',
+      loadingMsg: 'Loading roles...',
+      errorMsg: 'Failed to delete roles',
     }
     return this.httpService.post<AppHttpResponse>(options)
 
@@ -77,7 +84,8 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       payload: { userId, departmentId },
       url: this.baseUrl + 'addUserDepartment',
-      loadingMsg: "Adding user's department ...",
+      loadingMsg: "Adding user's department...",
+      errorMsg: "Failed to add user's department",
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
@@ -85,7 +93,8 @@ export class UserHttpService {
     const options: AppHttpRequest = {
       payload: { userId, departmentId },
       url: this.baseUrl + 'deleteUserDepartment',
-      loadingMsg: "Deleting user's department ...",
+      loadingMsg: "Deleting user's department...",
+      errorMsg: "Failed to delete user's department"
     }
     return this.httpService.post<AppHttpResponse>(options)
   };

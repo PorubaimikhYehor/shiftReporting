@@ -15,6 +15,7 @@ import * as fromInterface from './interface/interface.reducer';
 import * as fromDataEntry from './data-entry/data-entry.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromConfiguration from './configuration/configuration.reducer';
+import * as fromConnection from './connection/connection.reducer';
 
 export interface State {
 
@@ -27,6 +28,8 @@ export interface State {
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.State;
   [fromUser.usersFeatureKey]: fromUser.State;
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.State;
+  [fromConnection.connectionFeatureKey]: fromConnection.State;
+
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -40,6 +43,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.reducer,
   [fromUser.usersFeatureKey]: fromUser.reducer,
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.reducer,
+  [fromConnection.connectionFeatureKey]: fromConnection.reducer,
 };
 
 
@@ -54,6 +58,8 @@ export const allPlants = createSelector(plantState, fromPlant.selectAll);
 export const departmentsState = createFeatureSelector<fromDepartment.State>('departments');
 export const allDepartments = createSelector(departmentsState, fromDepartment.selectAll);
 export const userDepartments = createSelector(departmentsState, (state) => state.userDepartments);
+export const currentDepartment = createSelector(departmentsState, (state) => state.currentDepartment);
+
 
 //shifts
 export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
@@ -88,3 +94,7 @@ export const templateInterfaces = createSelector(interfaceState, (state) => stat
 //configurations
 export const configurationState = createFeatureSelector<fromConfiguration.State>('configuration');
 export const configurations = createSelector(configurationState, (state) => state.configurations);
+
+// connection
+export const connectionState = createFeatureSelector<fromConnection.State>('connection');
+export const connectionStatus = createSelector(connectionState, (state) => state.isConnected);
