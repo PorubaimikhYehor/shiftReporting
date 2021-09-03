@@ -10,7 +10,7 @@
     <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
     <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
       <input [readonly]="options.control.readonly" type="text" matInput [placeholder]="options.control.label"
-        [formControlName]="options.control.controlId">
+        [formControlName]="options.control.controlId" [required]="options?.control?.validators?.required">
     </div>
   </mat-form-field>
 </div>

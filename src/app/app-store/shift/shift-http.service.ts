@@ -49,8 +49,9 @@ export class ShiftHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getShifts',
       // payload: { departmentId },
-      loadingMsg: 'Loading the shifts...',
-      errorMsg: 'Failed to load the shifts',
+      loadingMsg: 'Loading shifts...',
+      errorMsg: 'Failed to load shifts',
+      successMsg: 'Loaded shifts',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

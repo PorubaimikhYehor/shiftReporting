@@ -10,7 +10,7 @@ export class ConnectionCheckerService {
   }
 
   private check(timeout: number) {
-    this.http.get({url: ''})
+    this.http.get({url: 'connection/check'})
       .subscribe(x => setTimeout(
         () => this.check(timeout),
         timeout

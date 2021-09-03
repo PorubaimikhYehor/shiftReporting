@@ -1,12 +1,17 @@
 <mat-drawer-container class="h-full">
   <mat-drawer #drawer mode="over" position="end">
     <div class="p-4">
+      <div class="flex justify-end mb-3" *ngIf="isSmallScreen">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon svgIcon="window-close"></mat-icon>
+        </button>
+      </div>
       <app-data-entry-log></app-data-entry-log>
     </div>
   </mat-drawer>
   <mat-drawer-content>
     <section *ngIf="isSmallScreen">
-      <div class="h-12 ml-20 flex items-end">
+      <div class="h-12 ml-20 flex items-end text-xl font-semibold">
         <p class=".mat-headline">{{title}}</p>
       </div>
       <div>

@@ -1,6 +1,6 @@
 <div class="m-4">
     <div *ngFor="let item of dashboard" class="">
-        <app-dynamic-controls appearance="outline" [control]="item" [form]="form"></app-dynamic-controls>
+        <app-dynamic-controls appearance="outline" [control]="item" [form]="form" *ngIf="item.type != 'label'"></app-dynamic-controls>
         <!-- <div class="bg-transparent absolute h-full w-full top-0 left-0" [ngClass]="{'hidden': !blind}"></div> -->
     </div>
 

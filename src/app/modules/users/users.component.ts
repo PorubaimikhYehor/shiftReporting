@@ -3,7 +3,7 @@ import { User, State, Role } from '@models/*';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
-import { allUsers, roles } from 'src/app/app-store';
+import { allUsers, isSmallScreen, roles } from 'src/app/app-store';
 import { UserActions } from '@actions/*';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { AuthorizationService } from '../authorization/authorization.service';
@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   search = new FormControl('')
   roles: Role[];
   currentUser: User;
+
   constructor(
     private dialog: MatDialog,
     private store: Store<State>,
@@ -33,7 +34,7 @@ export class UsersComponent implements OnInit {
     this.search.valueChanges.subscribe(str => this.setFilterUsers(str))
     this.getCurrentUser().pipe(
       mergeMap(_ => this.getUsers())
-    ).subscribe()
+    ).subscribe();
   }
   getCurrentUser() {
     return this.authService.getCurrentUser().pipe(
@@ -45,13 +46,17 @@ export class UsersComponent implements OnInit {
       this.filterUsers = [...this.users];
       return;
     }
-    const str = string.toLowerCase()
-    this.filterUsers = this.users.filter(i => (
-      i.firstName?.toLowerCase().includes(str)
-      || i.secondName?.toLowerCase().includes(str)
-      || i.email?.toLowerCase().includes(str)
-      || i.login?.toLowerCase().includes(str)
-    ))
+    const query = string.split(' ');
+    this.filterUsers = this.users;
+    query.map(word => {
+      const str = word.toLowerCase()
+      this.filterUsers = this.filterUsers.filter(i => (
+        i.firstName?.toLowerCase().includes(str)
+        || i.secondName?.toLowerCase().includes(str)
+        || i.email?.toLowerCase().includes(str)
+        || i.login?.toLowerCase().includes(str)
+      ))
+    })
   }
 
   getUsers() {

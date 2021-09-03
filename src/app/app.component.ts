@@ -8,13 +8,14 @@ import { routerLinks } from './modules/authorization/guards/role.guard';
 import { Store, select } from '@ngrx/store';
 import { ConfigurationsActions, UserActions } from './app-store/actions'
 import { getRoles } from './app-store/user/user.actions';
-import { userRoles, roles, userDepartments, connectionStatus } from './app-store';
+import { userRoles, roles, userDepartments, connectionStatus, isSmallScreen } from './app-store';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { CurrentUserFormComponent } from './modules/users/components/current-user-form/current-user-form.component';
 import { DataEntryCookieSenderService } from './app-store/data-entry/data-entry-cookie-sender.service';
 import { ConnectionCheckerService } from './app-store/connection/connection-checker.service';
 import { Router } from '@angular/router';
+import { ScreenSizeUpdaterService } from './app-store/screen/screen-size-updater.service';
 
 @Component({
   selector: 'app-root',
@@ -42,14 +43,15 @@ export class AppComponent implements OnInit {
     private dataEntryCookieSender: DataEntryCookieSenderService,
     private connectionCheckerService: ConnectionCheckerService,
     private router: Router,
+    private screenSizeUpdater: ScreenSizeUpdaterService,
   ) { }
 
 
   ngOnInit(): void {
-    this.bpObserver.observe('(max-width: 960px)').subscribe(result => {
-      this.smallScreen = result.matches;
-      this.isSnavOpen = !result.matches
-    })
+    this.store.select(isSmallScreen).subscribe(small => {
+      this.smallScreen = small;
+      this.isSnavOpen = !small;
+    });
     this.store.pipe(
       select(roles),
       filter(roles => !!roles.length),
@@ -66,13 +68,14 @@ export class AppComponent implements OnInit {
         this.abbreviation = currentUser?.firstName.slice(0, 1).toUpperCase() + currentUser?.secondName.slice(0, 1).toUpperCase();
         this.config.map(item => item['isShow'] = item.allowedRoles.includes(currentUser.roleId))
       }),
-    ).subscribe();
+      ).subscribe();
+      this.store.select(connectionStatus)
+       .subscribe(status => this.isConnected = status);
 
     this.dataEntryCookieSender.send('data-entry-backup');
-    this.connectionCheckerService.start(5000);
+    //this.connectionCheckerService.start(5000);
+    this.screenSizeUpdater.start();
 
-    this.store.select(connectionStatus)
-      .subscribe(status => this.isConnected = status);
   }
 
   editUserInfo() {

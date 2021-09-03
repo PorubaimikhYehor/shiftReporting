@@ -19,6 +19,7 @@ export class PlantHttpService {
       url: this.baseUrl + 'getPlants',
       loadingMsg: 'Loading plants...',
       errorMsg: 'Failed to load plants',
+      successMsg: 'Loaded plants',
     }
     return this.httpService.post<AppHttpResponse>(options)
   }

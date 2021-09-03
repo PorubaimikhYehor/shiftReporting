@@ -1,10 +1,10 @@
-<div class="flex justify-between items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">
+<div class="flex justify-between items-center bg-blue-500 text-white text-sm font-bold px-4 py-1 rounded-md" role="alert" (click)="close()">
   <div class="flex items-center">
-    <mat-icon svgIcon="information-variant"></mat-icon>
+    <mat-icon svgIcon="information-outline" class="mr-2"></mat-icon>
     <!-- <svg-icon src="assets/svg_icons/information-variant.svg" [svgStyle]="{ 'fill': 'white'}"> </svg-icon> -->
     <ng-content class=""></ng-content>
   </div>
-  <button (click)="close()" mat-icon-button>
+  <button mat-icon-button>
     <mat-icon svgIcon="window-close"></mat-icon>
   </button>
   <!-- <button (click)="close()" class="pl-2 ml-2 focus:outline-none">

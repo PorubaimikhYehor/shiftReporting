@@ -8,6 +8,8 @@ import * as UserActions from './user/user.actions';
 import * as InterfaseActions from './interface/interface.actions';
 import * as ConfigurationsActions from './configuration/configuration.actions';
 import * as ConnecitonActions from './connection/connection.actions'
+import * as ScreenActions from './screen/screen.actions'
+import * as FontActions from './font/font.actions';
 
 export {
   PlantActions,
@@ -19,5 +21,7 @@ export {
   UserActions,
   InterfaseActions,
   ConfigurationsActions,
-  ConnecitonActions
+  ConnecitonActions,
+  ScreenActions,
+  FontActions
 };

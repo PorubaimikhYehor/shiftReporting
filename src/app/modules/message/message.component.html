@@ -1,7 +1,7 @@
-<div *ngIf="isShow && isError" class="fixed top-0 left-0 h-screen w-screen z-50">
+<div *ngIf="isShow && isError" class="fixed top-0 left-0 h-screen w-screen z-50 bg-black opacity-30" @showHideBg>
 </div>
 
-<div *ngIf="isShow" class="fixed top-0 transform translate-y-8 -translate-x-1/2 w-1/2 max-w-xl z-50" style="left: 50%;">
+<div *ngIf="isShow" class="fixed top-0 transform translate-y-8 -translate-x-1/2 z-50 left-1/2" [ngClass]="isSmallScreen ? 'w-5/6' : 'w-1/2 max-w-xl'" @showHideMessage>
   <div>
     <ng-container *ngComponentOutlet="component; content: content"></ng-container>
   </div>

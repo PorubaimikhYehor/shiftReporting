@@ -30,6 +30,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-500' },
     missed: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-500' },
     open: { name: "circle-outline", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'bg-orange-100 text-orange-500' },
+    pending: { name: "pending", styleSvg: { fill: 'orange', width: '1rem', height: '1rem' }, styleClass: 'bg-orange-100 text-orange-500' },
   }
 
   templates;
@@ -93,7 +94,8 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       const getStyle = () => {
         if (new Date() < startDate) return this.style.lock;
         if (!dataEntry) return this.style.missed;
-        if (dataEntry.submitDate) return this.style.submited;
+        if (dataEntry.submitDate && dataEntry.isApproved) return this.style.submited;
+        if (dataEntry.submitDate) return this.style.pending;
         return this.style.open;
       }
       templates.push ({
@@ -122,7 +124,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       deadline: item.deadLine,
     };
     if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > item.deadLine) {
-      this.messageService.alertMessage('data is missing')
+      this.messageService.alertMessage('Data is missing')
       return;
     }
     if (item.dataEntry) {

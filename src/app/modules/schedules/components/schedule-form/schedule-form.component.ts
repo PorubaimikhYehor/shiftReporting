@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Schedule, DynText, DynTime, DynNumber } from '@models/*';
+import { Schedule, DynText, DynTime, DynNumber, State } from '@models/*';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DynDate } from 'src/app/modules/dynamic-controls/components/dyn-date/dyn-date.model';
 import { DateService } from 'src/app/services/date/date.service';
+import { Store } from '@ngrx/store';
+import { isSmallScreen } from 'src/app/app-store';
 
 @Component({
   selector: 'app-schedule-form',
@@ -26,9 +28,11 @@ export class ScheduleFormComponent implements OnInit {
     new DynNumber({ controlId: 'recurEveryWeeks', label: 'Recur Every Weeks', min: 1, max: 15, step: 1, validators: { required: true } }),
   ]
   daysList = this.dateService.daysOfWeek
+  isSmallScreen: boolean;
 
 
   constructor(
+    private store: Store<State>,
     private dateService: DateService,
     public dialogRef: MatDialogRef<ScheduleFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { schedule: Schedule, },
@@ -36,6 +40,8 @@ export class ScheduleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.schedule = { ...this.data.schedule };
+    this.store.select(isSmallScreen)
+      .subscribe(small => this.isSmallScreen = small);
   }
 
   getForm(e: FormGroup) {

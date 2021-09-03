@@ -16,6 +16,9 @@ import * as fromDataEntry from './data-entry/data-entry.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromConfiguration from './configuration/configuration.reducer';
 import * as fromConnection from './connection/connection.reducer';
+import * as fromScreen from './screen/screen.reducer';
+import * as fromFont from './font/font.reducer';
+
 
 export interface State {
 
@@ -29,7 +32,8 @@ export interface State {
   [fromUser.usersFeatureKey]: fromUser.State;
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.State;
   [fromConnection.connectionFeatureKey]: fromConnection.State;
-
+  [fromScreen.screenFeatureKey]: fromScreen.State;
+  [fromFont.fontFeatureKey]: fromFont.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -44,6 +48,8 @@ export const reducers: ActionReducerMap<State> = {
   [fromUser.usersFeatureKey]: fromUser.reducer,
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.reducer,
   [fromConnection.connectionFeatureKey]: fromConnection.reducer,
+  [fromScreen.screenFeatureKey]: fromScreen.reducer,
+  [fromFont.fontFeatureKey]: fromFont.reducer,
 };
 
 
@@ -51,6 +57,12 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 
 
 // ========= selectors ========
+
+// fonts
+
+export const fontState = createFeatureSelector<fromFont.State>('font');
+export const allFontSizes = createSelector(fontState, (state)=> state.FontSizes);
+export const allFontFamilies = createSelector(fontState, (state)=> state.FontFamilies);
 // plants
 export const plantState = createFeatureSelector<fromPlant.State>('plants');
 export const allPlants = createSelector(plantState, fromPlant.selectAll);
@@ -86,6 +98,8 @@ export const dataEntryState = createFeatureSelector<fromDataEntry.State>('dataEn
 export const dataEntriesOnDate = createSelector(dataEntryState, (state) => state.dataEntriesOnDate);
 export const currentDataEntry = createSelector(dataEntryState, (state) => state.currentDataEntry);
 export const dataEntryLogs = createSelector(dataEntryState, (state) => state.dataEntryLogs);
+export const dataEntriesWaitingForApproval = createSelector(dataEntryState, (state) => state.dataEntriesWaitingForApproval);
+export const pendingDataEntry = createSelector(dataEntryState, (state) => state.pendingDataEntry);
 
 // interfaces
 export const interfaceState = createFeatureSelector<fromInterface.State>('interface');
@@ -98,3 +112,7 @@ export const configurations = createSelector(configurationState, (state) => stat
 // connection
 export const connectionState = createFeatureSelector<fromConnection.State>('connection');
 export const connectionStatus = createSelector(connectionState, (state) => state.isConnected);
+
+// screen
+export const screenState = createFeatureSelector<fromScreen.State>('screen');
+export const isSmallScreen = createSelector(screenState, (state) => state.isSmall);

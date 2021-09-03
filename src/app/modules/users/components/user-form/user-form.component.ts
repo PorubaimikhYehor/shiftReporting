@@ -3,7 +3,7 @@ import { User, DynText, DynCheckbox, State, Role, DynSelect, Plant } from '@mode
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { roles, userDepartments, allPlants } from 'src/app/app-store';
+import { roles, userDepartments, allPlants, isSmallScreen } from 'src/app/app-store';
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 import { PlantActions } from '@actions/*';
 import { filter, tap, mergeMap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { filter, tap, mergeMap } from 'rxjs/operators';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
+  isSmallSCreen: boolean;
   currentUser: User;
   departments = new FormControl();
   departmentsList = [];
@@ -71,6 +72,8 @@ export class UserFormComponent implements OnInit {
         this.currentUser.departments
           .filter(d => val.includes(d.departmentId))
       )
+    this.store.select(isSmallScreen)
+        .subscribe(small => this.isSmallSCreen = small);
   }
 
   createDepList() {

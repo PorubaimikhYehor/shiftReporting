@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
 import { filter, mergeMap, take, tap } from 'rxjs/operators';
+import { MessageService } from '../message/sevices/message.service';
 
 @Component({
   selector: 'app-template',
@@ -49,6 +50,7 @@ export class TemplateComponent implements OnInit {
     private dashboardService: DashboardService,
     private dateService: DateService,
     private dialog: MatDialog,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -136,6 +138,11 @@ export class TemplateComponent implements OnInit {
   dropNewItem(gridItem): void {
     this.dashboardService.createNewControl(this.dashboard, gridItem, this.newControlType);
   }
+
+  copyItem(data): void {
+    this.dashboardService.copyControl(this.dashboard, data.gridItem, data.control);
+  }
+
   clickItem(controlId) {
     const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {
@@ -185,6 +192,10 @@ export class TemplateComponent implements OnInit {
   }
 
   save() {
+    if (!this.template.name) {
+      this.messageService.errorMessage("Can't save template without name");
+      return;
+    }
     this.template.body.dashboard = this.dashboard;
     const template: Template = JSON.parse(JSON.stringify(this.template));
     template.body.dashboard.map(i => {
@@ -243,12 +254,22 @@ export class TemplateComponent implements OnInit {
 
   addUserToNotifyList(userId: string) {
     if (!~this.template.body.toNotifyUserIdList.indexOf(userId))
-      this.template.body.toNotifyUserIdList.push(userId);
+      this.template.body.toNotifyUserIdList = this.template.body.toNotifyUserIdList.concat([userId]);
   }
 
   removeUserFromToNotifyList(userId: string) {
     if (~this.template.body.toNotifyUserIdList.indexOf(userId))
       this.template.body.toNotifyUserIdList = this.template.body.toNotifyUserIdList.filter(id => id != userId);
+  }
+
+  addSubmissionApprover(userId: string) {
+    if (!~this.template.body.submissionApprovers.indexOf(userId))
+      this.template.body.submissionApprovers = this.template.body.submissionApprovers.concat([userId]);
+  }
+
+  removeSubmissionApprover(userId: string) {
+    if (~this.template.body.submissionApprovers.indexOf(userId))
+      this.template.body.submissionApprovers = this.template.body.submissionApprovers.filter(id => id != userId);
   }
 }
 

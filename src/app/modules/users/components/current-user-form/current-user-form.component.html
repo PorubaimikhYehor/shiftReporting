@@ -1,8 +1,8 @@
 <p mat-dialog-title>User settings</p>
 <div mat-dialog-content>
-  <app-form [flex]='true' [controls]='name' [values]="editingUser" (form)="getForm($event)"></app-form>
-  <app-form [flex]='true' [controls]='login' [values]="editingUser" (form)="getForm($event)"></app-form>
-  <app-form [flex]='true' [controls]='mail' [values]="editingUser" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallScreen' [controls]='name' [values]="editingUser" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallScreen' [controls]='login' [values]="editingUser" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallScreen' [controls]='mail' [values]="editingUser" (form)="getForm($event)"></app-form>
 </div>
 <mat-dialog-actions class="flex justify-end">
   <button mat-button color="primary" mat-dialog-close>CANCEL</button>

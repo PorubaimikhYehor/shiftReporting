@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User, DynText } from '@models/*';
+import { User, DynText, State } from '@models/*';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { isSmallScreen } from 'src/app/app-store';
 
 @Component({
   selector: 'app-current-user-form',
@@ -12,6 +14,7 @@ export class CurrentUserFormComponent implements OnInit {
   editingUser: User;
   forms: FormGroup[] = [];
   form = new FormGroup({});
+  isSmallScreen: boolean;
 
   name = [
     new DynText({ controlId: 'firstName', label: 'First name', validators: { required: true } }),
@@ -26,6 +29,7 @@ export class CurrentUserFormComponent implements OnInit {
   ];
 
   constructor(
+    private store: Store<State>,
     public dialogRef: MatDialogRef<CurrentUserFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       user: User,
@@ -34,6 +38,8 @@ export class CurrentUserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.editingUser = { ...this.data.user }
+    this.store.select(isSmallScreen)
+      .subscribe(small => this.isSmallScreen = small);
   }
 
   getForm(e: FormGroup) {

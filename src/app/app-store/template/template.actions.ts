@@ -13,6 +13,15 @@ export const addTemplateSuccess = createAction(
   props<{ template: Template }>()
 );
 
+export const copyTemplate = createAction(
+  '[Template/API] Copy Template',
+  props<{ departmentId: number, template: Template }>()
+);
+export const copyTemplateSuccess = createAction(
+  '[Template/API] Copy Template Success',
+  props<{ template: Template }>()
+);
+
 export const updateTemplate = createAction(
   '[Template/API] Update Template',
   props<{ template: Template }>()

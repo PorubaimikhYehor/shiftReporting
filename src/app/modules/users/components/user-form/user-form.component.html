@@ -1,9 +1,9 @@
 <p mat-dialog-title>User settings</p>
 <div mat-dialog-content>
-  <app-form [flex]='true' [controls]='name' [values]="user" (form)="getForm($event)"></app-form>
-  <app-form [flex]='true' [controls]='login' [values]="user" (form)="getForm($event)"></app-form>
-  <app-form [flex]='true' [controls]='mail' [values]="user" (form)="getForm($event)"></app-form>
-  <app-form [flex]='true' [controls]='role' [values]="user" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallSCreen' [controls]='name' [values]="user" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallSCreen' [controls]='login' [values]="user" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallSCreen' [controls]='mail' [values]="user" (form)="getForm($event)"></app-form>
+  <app-form [flex]='!isSmallSCreen' [controls]='role' [values]="user" (form)="getForm($event)"></app-form>
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Departments </mat-label>
     <div style="height: 0; overflow: hidden;">

@@ -11,6 +11,7 @@ export class User {
   login: string = null;
   departments: Department[] = null;
   roleId: number = null;
+  dataEntriesToApprove: string = null;
 
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {

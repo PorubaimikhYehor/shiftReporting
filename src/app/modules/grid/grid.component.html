@@ -1,18 +1,35 @@
 <div class="h-full w-full overflow-auto ">
   <div [ngStyle]="gridSize" class="mx-auto">
-    <gridster [options]="optionsResult" [style.background-color]="optionsResult.bgColor" class="rounded-lg">
+    <gridster [options]="optionsResult" [style.background-color]="optionsResult.bgColor" class="rounded-lg" (contextmenu)="gridRightClick($event)">
       <gridster-item *ngFor="let item of dashboard" [class.isCurrent]='item.controlId === selectedControlId'
         [item]="item.gridItem" [style.background-color]="getBackground(item)"
-        (click)="itemClick($event, item.controlId)">
+        (click)="itemClick($event, item.controlId)"
+        (contextmenu)="itemRightClick($event, item.controlId);false">
         <app-dynamic-controls appearance="standard1" [control]="item" [form]="form"></app-dynamic-controls>
         <div class="bg-transparent absolute h-full w-full top-0 left-0" [ngClass]="{'hidden': !blind}"></div>
       </gridster-item>
     </gridster>
   </div>
+  <div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+
+	<ng-template matMenuContent  let-itemId = "itemId" let-c = "c" let-r = "r">
+		<button mat-menu-item (click)="onCopy(itemId)" [disabled] = "!itemId">Copy</button>
+    <button mat-menu-item (click)="onPaste(c,r)" [disabled] = "!itemToCopy">Paste</button>
+    <button mat-menu-item (click)="itemToCopy=null">Cancel</button>
+	</ng-template>
+
+</mat-menu>
 </div>
 
 
-<!-- <gridster-item class="gridster__item" [class.isCurrent]='item.controlId === selectedItemId'
+<!--
+  (contextmenu)="itemToCopy && gridRightClick($event);false"
+  <gridster-item class="gridster__item" [class.isCurrent]='item.controlId === selectedItemId'
 *ngFor="let item of dashboard" [item]="item.gridItem" (click)="itemClick($event, item.controlId)"
 [style.background-color]="getBackground(item)">
 <app-dynamic-controls [control]="item.control" [form]="form"></app-dynamic-controls>

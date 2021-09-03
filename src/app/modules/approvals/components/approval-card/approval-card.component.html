@@ -1,0 +1,23 @@
+<mat-card *ngIf="dataEntry" class="h-full">
+    <div class="flex flex-col h-full">
+      <div class="flex mb-1">
+        <mat-icon style="min-width: 24px;" class="mr-2" svgIcon="file-table-box" color="primary"></mat-icon>
+        <p class="font-bold text-xl">{{dataEntry.template.name}}</p>
+      </div>
+      <div class="flex text-gray-600 mb-1">
+        <mat-icon style="height: 16px;" class="mr-2" svgIcon="update"></mat-icon>
+        <p class="text-sm">{{SubmitDate}}</p>
+      </div>
+      <!-- <div class="flex text-gray-600 mb-1">
+        <div class="mr-2 w-6"></div>
+        <p class="text-sm">{{template.description}}</p>
+      </div> -->
+      <div class="flex-1"></div>
+      <div align="end" class="-mb-2 -mx-2 text-gray-600">
+        <button mat-icon-button (click)="check()" >
+          <mat-icon svgIcon="check"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+  

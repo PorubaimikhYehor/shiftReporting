@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { GridsterItem, GridsterConfig } from 'angular-gridster2';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, HostListener, ViewChild } from '@angular/core';
+import { GridsterItem, GridsterConfig, GridsterItemComponentInterface } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { FormGroup } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 // export interface DboardItem {
 //   key: string;
@@ -38,6 +39,11 @@ export const optionsBase: GridsterOptions = {
   }
 };
 
+export interface dataCopy{
+  gridItem:GridsterItem,
+  control:DynControl
+}
+
 
 @Component({
   selector: 'app-grid',
@@ -53,11 +59,15 @@ export class GridComponent implements OnChanges {
   @Input() showInvalid: boolean;
   @Input() controlsErrors //: TemplateDataItem[];
   @Input() blind: boolean;
+  @Input() rclickEnabled: boolean;
 
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
+  @Output() copyItem: EventEmitter<dataCopy> = new EventEmitter<dataCopy>();
   @Output() dashboardChange: EventEmitter<DynControl[]> = new EventEmitter<DynControl[]>();
   // @Output() optionsChange: EventEmitter<GridsterOptions> = new EventEmitter<GridsterOptions>()
+
+  constructor(){}
 
   private _optionsBuild: GridsterConfig = {
     itemChangeCallback: (e, i) => this.gridsterItemChange(e, i),
@@ -69,6 +79,7 @@ export class GridComponent implements OnChanges {
       delayStart: 0,
       enabled: true,
       dropOverItems: false,
+      start: (item: GridsterItem, itemComponent: GridsterItemComponentInterface, event: MouseEvent) => {this.dragStart(item, itemComponent, event)},
     },
     resizable: {
       enabled: true,
@@ -79,10 +90,23 @@ export class GridComponent implements OnChanges {
   optionsResult: GridsterOptions = {};
   optionsAppointment: GridsterOptions;
   elementErrors//: ElementError[];
+  itemToCopy:DynControl=null;
+
+  mouseMoved: boolean = false;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    this.mouseMoved = true;
+  }
 
   ngOnChanges(): void {
     this.processingOptions(this.appointment);
   }
+
+  dragStart(item: GridsterItem, itemComponent: GridsterItemComponentInterface, event: MouseEvent): void {
+    this.mouseMoved = false;
+  }
+
   processingOptions(appointment: string) {
     const optionsAppointment = appointment === 'build'
       ? this._optionsBuild : {};
@@ -120,10 +144,36 @@ export class GridComponent implements OnChanges {
   }
 
   itemClick(event, id): void {
-    !this.isItemChange && this.clickItem.emit(id);
+    !this.isItemChange && !this.mouseMoved && this.clickItem.emit(id);
     this.isItemChange = false;
   }
 
+  gridRightClick(event): void {
+    if(this.rclickEnabled){event.preventDefault();
+      let x = event.clientX + 'px';
+      let y = event.clientY + 'px';
+      this.contextMenuPosition.x = x;
+      this.contextMenuPosition.y = y;
+      let c = Math.floor(event.offsetX/this.optionsResult.fixedColWidth);
+      let r = Math.floor(event.offsetY/this.optionsResult.fixedRowHeight);
+      this.contextMenu.menuData = {'c':c,'r':r};
+      this.contextMenu.menu.focusFirstItem('mouse');
+      this.contextMenu.openMenu();
+    }
+    
+  }
+
+  itemRightClick(event, id): void {
+    event.preventDefault();
+    
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'itemId': id };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  
+  }
+  
   changedOptions() {
     if (this.optionsResult.api && this.optionsResult.api.optionsChanged) {
       this.optionsResult.api.optionsChanged();
@@ -131,6 +181,7 @@ export class GridComponent implements OnChanges {
   }
 
   emptyCellDrop(event: MouseEvent, item: GridsterItem) {
+    console.log(item);
     this.dropNewItem.emit(item);
   }
 
@@ -150,4 +201,26 @@ export class GridComponent implements OnChanges {
   // getContent(item) {
   // return `[slot="${item.key}"]`
   // }
+
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
+
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+
+  onCopy(id:string){
+    this.itemToCopy = this.dashboard.filter(d=>d.controlId==id)[0];
+  }
+
+  onPaste(c,r){
+    let item:GridsterItem = {rows:this.itemToCopy.gridItem.rows,cols:this.itemToCopy.gridItem.cols,x:c,y:r};
+
+    this.copyItem.emit({gridItem:item,control:this.itemToCopy});
+    this.isItemChange = true;
+    this.changedOptions();
+  }
+
+
+
+
 }

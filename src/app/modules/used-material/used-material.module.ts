@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import {MatMenuModule} from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -28,6 +28,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 const modules = [
+  MatMenuModule,
   MatAutocompleteModule,
   MatTableModule,
   MatSortModule,

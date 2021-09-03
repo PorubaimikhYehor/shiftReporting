@@ -1,7 +1,0 @@
-
-<div *ngFor="let user of users" class="mb-3">
-	<mat-checkbox color="primary" (change)="onChange($event, user)" [checked]="checkedUsers.indexOf(user.userId) != -1">
-		<p>{{ user.firstName }} {{ user.secondName }}</p>
-		<p class="text-xs text-gray-500">{{ user.email }}</p>
-	</mat-checkbox>
-</div>

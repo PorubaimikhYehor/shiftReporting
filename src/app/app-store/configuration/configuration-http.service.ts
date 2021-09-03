@@ -20,7 +20,8 @@ export class ConfigurationHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getConfigurations',
       loadingMsg: 'loading configurations...',
-      errorMsg: 'Failed to load configurations'
+      errorMsg: 'Failed to load configurations',
+      successMsg: 'Loaded configurations',
     }
     return this.httpService.post<AppHttpResponse>(options).pipe(
       filter(resp => resp && resp.status === 200),

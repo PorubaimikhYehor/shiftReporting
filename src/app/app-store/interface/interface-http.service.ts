@@ -37,6 +37,7 @@ export class InterfaceHttpService {
       url: this.baseUrl + 'getInterfaces',
       loadingMsg: 'Loading interfaces...',
       errorMsg: 'Failed to load interfaces',
+      successMsg: 'Loaded interfaces',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

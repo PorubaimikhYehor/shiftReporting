@@ -15,7 +15,15 @@ import { CurrentUserFormComponent } from './components/current-user-form/current
 
 
 @NgModule({
-  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent, UsersComponent, CurrentUserFormComponent],
+  declarations: [
+    UserCardComponent, 
+    UserFormComponent, 
+    UsersConfigComponent, 
+    UserRolesComponent, 
+    UserDepartmentsComponent, 
+    UsersComponent, 
+    CurrentUserFormComponent
+  ],
   imports: [
     // AngularSvgIconModule.forRoot(),
     CommonModule,

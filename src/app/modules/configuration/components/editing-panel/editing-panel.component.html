@@ -1,5 +1,5 @@
 <div class="mt-8 border border-gray-600 pt-6 px-6 relative" >
-  <p class="absolute font-bold bg-white " style="top: -12px">{{title}}</p>
+  <p class="absolute font-bold bg-white -top-3">{{title}}</p>
   <app-form [controls]="properties" [values]='object' (form)="getForm($event)"></app-form>
   <div class="my-4" align="end">
     <button class="btn mx-2" (click)='clickCancel.emit()'>Cancel</button>

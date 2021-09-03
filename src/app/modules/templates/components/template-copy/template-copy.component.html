@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Copy of : {{data.templateName}}</h1>
+<div mat-dialog-content>
+
+    <mat-form-field appearance="fill" >
+        <mat-label>Choose a department</mat-label>
+        <mat-select [(value)]="departmentId" (selectionChange)="onChangeId()">
+          <mat-option *ngFor="let department of departmentsAvailable" [value]="department.departmentId">
+            <p class="w-max inline">{{department.name}}</p>
+            <p *ngIf="department.departmentId == data.currentDepartmentId" class="w-max inline"> (current one)</p>
+          </mat-option>
+        </mat-select>
+
+    </mat-form-field>
+    <div>
+    <mat-form-field appearance="fill" >
+        <mat-label>Choose a name </mat-label>
+        <input matInput type="text" matInput [(ngModel)]="name" 
+        placeholder="new template name"
+        [formControl]="newName">
+        <mat-error *ngIf="newName.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="null">Cancel</button>
+  <button mat-raised-button color="primary" [disabled] = "newName.invalid"
+  [mat-dialog-close]="{departmentId:departmentId,name:name}" cdkFocusInitial>Ok</button>
+</div>

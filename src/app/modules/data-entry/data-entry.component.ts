@@ -5,7 +5,7 @@ import { currentDataEntry } from 'src/app/app-store';
 import { switchMap, tap, mergeMap, map, filter, skip, take } from 'rxjs/operators';
 import { GridsterOptions } from '../grid';
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
-import { DataEntryActions } from '@actions/*';
+import { DataEntryActions, FontActions } from '@actions/*';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { MessageService } from '../message/sevices/message.service';
 import { DateService } from 'src/app/services/date/date.service';
@@ -49,6 +49,8 @@ export class DataEntryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(FontActions.getFontFamilies());
+    this.store.dispatch(FontActions.getFontSizes());
     this.getDataEntry();
     this.bpObserver.observe('(max-width: 960px)').subscribe(result => {
       this.isSmallScreen = result.matches;
@@ -198,6 +200,7 @@ export class DataEntryComponent implements OnInit {
     if (!this.getSavePermission()) return;
     this.dataEntry.createDate = this.dataEntry.createDate || this.getCreateDate();
     this.dataEntry.submitDate = this.dateService.getLocalDate();
+    this.dataEntry.submitUserId = this.user.userId;
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
   }
 }

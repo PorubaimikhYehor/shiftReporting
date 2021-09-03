@@ -1,4 +1,10 @@
 <!-- <p>{{options | json}}</p> -->
 <div class="flex items-center h-full" [ngStyle]="{'background-color': options.control.bgColor}">
-  <p class="mx-1 truncate" [class.underline]="options.control.underline" [class.italic]="options.control.italic" [class.font-bold]="options.control.bold">{{options.control.label}}</p>
+  <p class="mx-1 truncate" 
+    [class.underline]="options.control.underline" 
+    [class.italic]="options.control.italic" 
+    [class.font-bold]="options.control.bold"
+    [style.font-size]="options.control.fSize"
+    [style.font-family]="options.control.fFamily">
+    {{options.control.label}}</p>
 </div>

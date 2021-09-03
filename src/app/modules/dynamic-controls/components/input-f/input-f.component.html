@@ -1,0 +1,15 @@
+ <div class="w-full h-full flex items-center">
+  
+      <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}" [formGroup]="options.form">
+
+        <input type='file' (change)="onSelectFile($event)" accept=".png, .jpg, .jpeg" >
+        <input type="text" hidden [formControlName]="options.control.controlId" [(ngModel)]="imageuploaded">
+       
+        <div  
+        class="errorupload"
+        *ngIf="error">
+        <p>Accepted Formats : JPG, PNG</p>
+      </div>
+      </div>
+
+  </div>

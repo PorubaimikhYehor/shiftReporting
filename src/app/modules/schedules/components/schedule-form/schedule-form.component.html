@@ -2,9 +2,9 @@
   <p mat-dialog-title>{{schedule.shiftName}} schedule settings</p>
 
   <div mat-dialog-content>
-    <app-form [flex]='true' [controls]='date' [values]="schedule" (form)="getForm($event)"></app-form>
-    <app-form [flex]='true' [controls]='time' [values]="schedule" (form)="getForm($event)"></app-form>
-    <app-form [flex]='true' [controls]='recurEveryWeeks' [values]="schedule" (form)="getForm($event)"></app-form>
+    <app-form [flex]='!isSmallScreen' [controls]='date' [values]="schedule" (form)="getForm($event)"></app-form>
+    <app-form [flex]='!isSmallScreen' [controls]='time' [values]="schedule" (form)="getForm($event)"></app-form>
+    <app-form [flex]='!isSmallScreen' [controls]='recurEveryWeeks' [values]="schedule" (form)="getForm($event)"></app-form>
 
     <div class="flex items-center">
       <label class="mr-4">Working days: </label>

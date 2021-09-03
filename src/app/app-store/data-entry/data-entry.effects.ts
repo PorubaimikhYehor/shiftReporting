@@ -83,11 +83,42 @@ export class DataEntryEffects {
     )),
   ));
 
+  approveDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.approveDataEntry),
+    mergeMap(({dataEntryId, approverId}) => this.dataEntryHttpService.approveDataEntry(dataEntryId, approverId).pipe(
+      map(resp =>  DataEntryActions.setCurrentDataEntry({currentDataEntry: null}))
+    ))
+  ));
+
+  rejectDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.rejectDataEntry),
+    mergeMap(({dataEntryId, approverId}) => this.dataEntryHttpService.rejectDataEntry(dataEntryId, approverId).pipe(
+      map(resp => DataEntryActions.setCurrentDataEntry({currentDataEntry: null}))
+    ))
+  ));
+
   getDataEntryLogs$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.getDataEntryLogs),
     mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntryLogs(dataEntryId).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.getDataEntryLogsSuccess({ dataEntryLogs: resp.body }))
+    )),
+  ));
+
+  getDataEntryById$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getDataEntryById),
+    mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntry(dataEntryId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => {
+        return DataEntryActions.setPendingDataEntry({ pendingDataEntry: resp.body })}))))
+    );
+
+    
+  getPendingDataEntries$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getPendingDataEntries),
+    mergeMap(({ userId }) => this.dataEntryHttpService.GetPendingDataEntries(userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.setDataEntrieWaitingForApproval({ DataEntriesWaitingForApproval: resp.body }))
     )),
   ));
 

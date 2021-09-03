@@ -24,7 +24,9 @@ export class DataSourceService {
   getDatasources(templateId): Observable<DataSource[]> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDatasources',
-      loadingMsg: 'Loading data ...',
+      loadingMsg: 'Loading data...',
+      successMsg: 'Successfuly loaded data',
+      errorMsg: 'Failed to load data',
       payload: { templateId }
     }
     return this.httpService.post<AppHttpResponse>(options)

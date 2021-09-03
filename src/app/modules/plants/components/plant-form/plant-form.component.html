@@ -1,8 +1,8 @@
 <div>
   <p mat-dialog-title>Plant settings</p>
   <div mat-dialog-content>
-    <app-form [flex]='true' [controls]='nameCode' [values]="plant" (form)="getForm($event)"></app-form>
-    <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form>
+    <app-form [flex]='!isSmallScreen' [controls]='nameCode' [values]="plant" (form)="getForm($event)"></app-form>
+    <app-form [flex]='!isSmallScreen' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form>
   </div>
   <mat-dialog-actions class="flex justify-end">
     <button mat-button color="primary" mat-dialog-close>CANCEL</button>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GridComponent } from './grid.component';
 import { GridsterModule } from 'angular-gridster2';
 import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.module';
+import { UsedMaterialModule } from '../used-material/used-material.module';
 
 
 
@@ -11,7 +12,8 @@ import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.modu
   imports: [
     CommonModule,
     GridsterModule,
-    DynamicControlsModule
+    DynamicControlsModule,
+    UsedMaterialModule
   ],
   exports: [
     GridComponent,

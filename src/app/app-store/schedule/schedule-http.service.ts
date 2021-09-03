@@ -49,7 +49,8 @@ export class ScheduleHttpService {
       url: this.baseUrl + 'getSchedules',
       payload: { departmentId },
       loadingMsg: 'Loading the schedule...',
-      errorMsg: 'Failed to load the schedule'
+      errorMsg: 'Failed to load the schedule',
+      successMsg: 'Loaded the schedule',
     }
     return this.httpService.post<AppHttpResponse>(options);
     return of(null)

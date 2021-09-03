@@ -1,0 +1,52 @@
+<mat-drawer-container class="h-full">
+  <mat-drawer #drawer mode="over" position="end">
+    <div class="p-4">
+      <div class="flex justify-end mb-3" *ngIf="isSmallScreen">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon svgIcon="window-close"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <!-- <section *ngIf="isSmallScreen">
+      <div class="h-12 ml-20 flex items-end text-xl font-semibold">
+        <p class=".mat-headline">{{title}}</p>
+      </div>
+      <div>
+        <app-mobile-entry-form [dashboard]="dashboard" [form]="form">content</app-mobile-entry-form>
+        <div>
+          <div class="mx-4 my-2">
+            <button (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
+          </div>
+          <div class="mx-4 my-2">
+            <button mat-flat-button color="primary" >REJECT</button>
+          </div>
+          <div  class="mx-4 my-2">
+            <button  mat-flat-button color="primary" >APPROVED</button>
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+    <section *ngIf="!isSmallScreen" class="h-full flex flex-col justify-center items-center">
+      <!-- Main window -->
+      <div class="flex justify-center">
+        <div class="m-2">
+          <button (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
+        </div>
+        <div class="m-2">
+          <button mat-flat-button color="primary" (click)="reject()">REJECT</button>
+        </div>
+        <div  class="m-2">
+          <button  mat-flat-button color="primary" (click)="approve()" >APPROVE</button>
+        </div>
+      </div>
+      <div class="p-2 overflow-auto">
+        <div>
+          <app-grid [options]="options" [dashboard]="dashboard" [form]="form"></app-grid>
+        </div>
+      </div>
+    </section>
+  </mat-drawer-content>
+</mat-drawer-container>

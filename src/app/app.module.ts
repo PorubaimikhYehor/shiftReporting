@@ -27,6 +27,7 @@ import { ShiftsModule } from './modules/shifts/shifts.module';
 import { SchedulesModule } from './modules/schedules/schedules.module';
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
 import { ConfigModule } from './modules/config/config.module';
+import { ApprovalsModule } from './modules/approvals/approvals.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ConfigModule } from './modules/config/config.module';
   ],
   imports: [
     BrowserModule,
+    ApprovalsModule,
     AppRoutingModule,
     DynamicControlsModule,
     FormsModule,

@@ -20,12 +20,14 @@ export class MessageService {
   private isShowMessageSourse = new BehaviorSubject<boolean>(null);
   private isShowMessage = this.isShowMessageSourse.asObservable();
 
+  private messages: AppMessage[] = [];
+
   getMessage(): Observable<AppMessage> {
     return this.message;
   }
   setMessage(message: AppMessage): void {
     this.messageSourse.next(message);
-    this.isShowMessageSourse.next(true)
+    this.isShowMessageSourse.next(!!message)
   }
 
 
@@ -39,29 +41,59 @@ export class MessageService {
 
 
   loadingMessage(message: string) {
-    this.setMessage({
+    if (!message) return;
+    this.pushMessage({
       message,
       type: 'loading'
     })
   }
 
   errorMessage(message: string) {
-    this.setMessage({
+    if (!message) return;
+    this.pushMessage({
       message,
       type: 'error'
     })
   }
   alertMessage(message: string) {
-    this.close();
+    // this.close();
     if (!message) return;
-    this.setMessage({
+    this.pushMessage({
       message,
       type: 'alert'
     })
   }
 
   close() {
-    this.setMessage(null);
-    this.setIsShowMessage(false)
+    // this.setMessage(null);
+    // this.setIsShowMessage(false)
+
+    if (this.messages.length)
+      this.messages.shift();
+
+    this.updateCurrentMessage();
+  }
+
+  pushMessage(message: AppMessage) {
+    this.messages.push(message);
+
+    this.updateCurrentMessage();
+  }
+
+  updateCurrentMessage() {
+    if (!this.messages.length) {
+      this.setMessage(null);
+      this.setIsShowMessage(false);
+      return;
+    }
+
+    if ((this.messages[0].type == 'loading' || this.messages[0].type == 'alert') && this.messages.length > 1) {
+      this.messages.shift();
+      this.updateCurrentMessage();
+      return;
+    }
+
+    this.setMessage(this.messages[0]);
+    this.setIsShowMessage(true);
   }
 } 

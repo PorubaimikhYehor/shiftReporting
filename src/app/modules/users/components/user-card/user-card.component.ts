@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User, State, Role } from '@models/*';
 import { Store, select } from '@ngrx/store';
-import { roles } from 'src/app/app-store';
+import { isSmallScreen, roles } from 'src/app/app-store';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -14,6 +14,8 @@ export class UserCardComponent implements OnInit {
   @Output() clickEdit = new EventEmitter<string>()
   @Output() clickRoles = new EventEmitter<string>()
   @Output() clickDepartments = new EventEmitter<string>()
+
+  isSmallScreen: boolean;
   // @Output() clickDelete = new EventEmitter<number>()
 
   roles: Role[] = [];
@@ -26,6 +28,8 @@ export class UserCardComponent implements OnInit {
       select(roles),
     ).subscribe(roles => this.roles = roles)
 
+    this.store.select(isSmallScreen)
+      .subscribe(small => this.isSmallScreen = small);
   }
 
   get firstName() {

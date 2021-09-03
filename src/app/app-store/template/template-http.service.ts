@@ -61,8 +61,9 @@ export class TemplateHttpService {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getTemplates',
       payload: { departmentID },
-      loadingMsg: 'Loading the templates...',
-      errorMsg: 'Failed to load the templates',
+      loadingMsg: 'Loading templates...',
+      errorMsg: 'Failed to load templates',
+      successMsg: 'Loaded templates',
     }
     // const resp: AppHttpResponse = {
     //   status: 200,

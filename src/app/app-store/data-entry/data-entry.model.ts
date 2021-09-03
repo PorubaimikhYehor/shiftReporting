@@ -9,6 +9,7 @@ export class DataEntry {
   template: Template = null;
   submitUserId: string = null;
   modifiedUserId: string = null;
+  isApproved: boolean = null;
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {
       if (Object.keys(this).includes(key)) {
@@ -16,6 +17,7 @@ export class DataEntry {
       }
     })
     this.template = new Template(opt['template'] || {})
+    this.isApproved = false;
   }
 }
 

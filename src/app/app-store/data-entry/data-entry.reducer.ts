@@ -6,16 +6,27 @@ export const dataEntryFeatureKey = 'dataEntry';
 
 export interface State {
   currentDataEntry: CurrentDataEntry,
+
+  //me
+  // currentDataEntryId: string,
+
+  pendingDataEntry: DataEntry,
   latestDataEntry: DataEntry,
   dataEntriesOnDate: DataEntry[],
   dataEntryLogs: DataEntryLog[],
+  dataEntriesWaitingForApproval: DataEntry[],
 }
 
 export const initialState: State = {
   currentDataEntry: null,
+
+  //me
+  // currentDataEntryId: null,
+  pendingDataEntry:null,
   latestDataEntry: null,
   dataEntriesOnDate: [],
   dataEntryLogs: [],
+  dataEntriesWaitingForApproval:[]
 };
 
 const dataEntryReducer = createReducer(
@@ -32,6 +43,12 @@ const dataEntryReducer = createReducer(
 
   on(DataEntryActions.getDataEntryLogsSuccess,
     (state, { dataEntryLogs }) => ({ ...state, dataEntryLogs })),
+
+  on(DataEntryActions.setDataEntrieWaitingForApproval,
+    (state, { DataEntriesWaitingForApproval }) => ({ ...state, dataEntriesWaitingForApproval:DataEntriesWaitingForApproval })),
+
+  on(DataEntryActions.setPendingDataEntry,
+    (state, { pendingDataEntry }) => ({ ...state, pendingDataEntry:pendingDataEntry })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

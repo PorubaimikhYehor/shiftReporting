@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { dynComponents } from '../../dynamic-controls';
-import { DynControl } from '../../dynamic-controls/models';
+import { BaseControl, DynControl } from '../../dynamic-controls/models';
 import { GridsterItem } from 'angular-gridster2';
 import { Interface, Template } from '@models/*';
 import { PiafHttpService } from '../../piaf/piaf-http.service';
@@ -85,6 +85,17 @@ export class DashboardService {
     dashboard.push(newControl)
     return newControl;
   }
+
+  copyControl(dashboard, gridItem, control:DynControl): DynControl {
+    const newControl = <DynControl>JSON.parse(JSON.stringify(control));
+    gridItem.cols = this.getMaxColsS(gridItem, dashboard);
+    newControl.controlId=new BaseControl().createControlId(newControl.type);
+    newControl.gridItem = gridItem;
+    dashboard.push(newControl)
+    return newControl;
+  }
+
+
   private getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
     const dboardGridster = dboard.map(i => i.gridItem);
     let maxLength = 5; /* maxLength - length of new element */

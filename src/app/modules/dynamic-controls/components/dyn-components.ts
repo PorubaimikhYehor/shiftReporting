@@ -18,6 +18,12 @@ import { DynLabelComponent } from './dyn-label/dyn-label.component';
 import { DynLabel } from './dyn-label/dyn-label.model';
 import { DynDate } from './dyn-date/dyn-date.model';
 import { DynDateComponent } from './dyn-date/dyn-date.component';
+import { DynImageComponent } from './dyn-image/dyn-image.component';
+import { DynImage } from './dyn-image/dyn-image.model';
+import { DynInputF } from './input-f/inputF.model';
+import { InputFComponent } from './input-f/input-f.component';
+import { DynTableComponent } from './dyn-table/dyn-table.component';
+import { DynTable } from './dyn-table/dyn-table.model';
 
 export const dynComponents = {
   get: function (type) { return this[type].component },
@@ -37,5 +43,8 @@ export const dynComponents = {
   time: { component: DynTimeComponent, /* title: 'Time', */ model: DynTime },
   color: { component: DynColorComponent, /* title: 'Color', */ model: DynColor },
   date: { component: DynDateComponent, /* title: 'Date', */ model: DynDate },
+  image: { component: DynImageComponent,  title: 'Image',  model: DynImage },
+  inputF: { component: InputFComponent,  model: DynInputF },
+  table: { component: DynTableComponent, title:"Table", model: DynTable}
 }
 

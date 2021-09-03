@@ -18,6 +18,14 @@ export class TemplateEffects {
     )),
   ));
 
+  copyTemplate$ = createEffect(() => this.actions$.pipe(
+    ofType(TemplateActions.copyTemplate),
+    mergeMap(({ departmentId, template }) => this.templateHttpService.addTemplate({ departmentId, template }).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => TemplateActions.copyTemplateSuccess({ template: resp.body }))
+    )),
+  ));
+
   updateTemplate$ = createEffect(() => this.actions$.pipe(
     ofType(TemplateActions.updateTemplate),
     mergeMap(({ template }) => this.templateHttpService.updateTemplate(template).pipe(

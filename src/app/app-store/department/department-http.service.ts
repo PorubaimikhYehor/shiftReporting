@@ -51,6 +51,7 @@ export class DepartmentHttpService {
       url: this.baseUrl + 'getDepartments',
       loadingMsg: 'Loading departments...',
       errorMsg: 'Failed to load departments',
+      successMsg: 'Loaded departments',
       payload: { plantId }
     }
     return this.httpService.post<AppHttpResponse>(options)
@@ -60,6 +61,7 @@ export class DepartmentHttpService {
       url: this.baseUrl + 'getUserDepartments',
       loadingMsg: "Loading user's departments...",
       errorMsg: 'Failed to load user\'s departments',
+      successMsg: 'Loaded user\'s departments',
       payload: { userId }
     }
     return this.httpService.post<AppHttpResponse>(options)
